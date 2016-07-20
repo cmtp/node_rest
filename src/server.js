@@ -1,4 +1,5 @@
 // Dependencies
+// var q = require('q');
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
@@ -18,9 +19,13 @@ app.get('/', function (req, res) {
 // POST /usuarios
 app.post('/usuarios', function (req, res) {
     var user = req.body;
-    var resultado = Users.create(user);
-    res.send(resultado);
-})
+    // var resultado = Users.create(user);
+    Users.create(user).then(function(resultado) {
+        res.send(resultado);
+    }).catch(function(err) {
+        console.log(err);
+    });
+});
 // listener
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');

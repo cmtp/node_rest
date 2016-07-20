@@ -1,3 +1,4 @@
+var q = require('q');
 var id = 1;
 var users = [];
 /**
@@ -11,7 +12,7 @@ function create(user) {
     user.id = id;
     users.push(user);
     id++;
-    return user;
+    return q.resolve(user);
 }
 
 module.exports  = {
