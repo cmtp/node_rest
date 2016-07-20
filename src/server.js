@@ -27,6 +27,7 @@ app.post('/usuarios', function (req, res) {
     });
 });
 app.get('/usuarios', function(req, res) {
+    // .find({name: 'chris'})
     Users.find().then(function(resultado) {
         res.send(resultado);
     }).catch(function(err) {
