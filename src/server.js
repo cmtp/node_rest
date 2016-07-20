@@ -26,6 +26,7 @@ app.post('/usuarios', function (req, res) {
         console.log(err);
     });
 });
+// GET 
 app.get('/usuarios', function(req, res) {
     // .find({name: 'chris'})
     Users.find().then(function(resultado) {
@@ -34,6 +35,14 @@ app.get('/usuarios', function(req, res) {
         console.log(err)
     });
 })
+// PUT 
+app.put('/usuarios/:userId', function(req,res) {
+
+});
+// DELETE 
+app.put('/usuarios/:userId', function(req,res) {
+
+});
 // listener
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
