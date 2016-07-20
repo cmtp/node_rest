@@ -26,6 +26,13 @@ app.post('/usuarios', function (req, res) {
         console.log(err);
     });
 });
+app.get('/usuarios', function(req, res) {
+    Users.find().then(function(resultado) {
+        res.send(resultado);
+    }).catch(function(err) {
+        console.log(err)
+    });
+})
 // listener
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');

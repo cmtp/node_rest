@@ -15,6 +15,24 @@ function create(user) {
     return q.resolve(user);
 }
 
+function find(params) {
+    if(!params) {
+        return q.resolve(users);
+    }
+
+    var result = users.filter(function (user) {
+        var found = false;
+        for( var param in params) {
+            if(user[param] && user[param] == params[param]) {
+                found = true;
+            }
+        }
+        return found
+    });
+    return q.resolve(result);
+}
+
 module.exports  = {
-    create: create
+    create: create,
+    find: find
 }
