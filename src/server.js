@@ -7,15 +7,12 @@ var morgan = require('morgan');
 var app = express();
 
 var Users = require('./models/users.js');
-console.log(Users);
+
 //add plugins to express
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-//GET /
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+
 // POST registrar usuario
 app.post('/users', function (req, res) {
     var user = req.body;
@@ -44,20 +41,20 @@ app.get('/users/:userId', function(req, res) {
         console.log(err);
     });
 });
-// PUT 
+// PUT actualizar usuario
 app.put('/users/:userId', function(req,res) {
-    var userId = req.params.body;
+    var userId = req.params.userId;
     Users.updateId(userId, req.body).then(function (result) {
         res.send(result);
     }).catch(function(err) {
         console.log(err);
     });
 });
-// DELETE 
+// DELETE remover un usuario
 app.delete('/users/:userId', function(req,res) {
     var userId = req.params.userId;
 
-    Users.deletedId(userId).then(function(result) {
+    Users.deleteId(userId).then(function(result) {
         res.send(result);
     }).catch(function (err) {
         console.log(err);
