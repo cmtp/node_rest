@@ -7,6 +7,7 @@ var morgan = require('morgan');
 var app = express();
 
 var Users = require('./models/users.js');
+var Posts = require('./models/posts.js')
 
 //add plugins to express
 app.use(bodyParser.urlencoded({extended: true}));
@@ -60,6 +61,54 @@ app.delete('/users/:userId', function(req,res) {
         console.log(err);
     });
 });
+
+//--------------------------------------------------------------
+app.get('/users/:userId/posts', function (req, res) {
+  var userId = req.params.userId;
+  Posts.find({userId: userId}).then(function (result) {
+    res.send(result)
+  }).catch(function (err) {
+    console.log(err)
+  })
+});
+
+app.get('/users/:userId/posts/:postId', function (req, res) {
+  var postId = req.params.postId;
+  Posts.findOne({id: postId}).then(function (result) {
+    res.send(result)
+  }).catch(function (err) {
+    console.log(err)
+  })
+});
+
+app.post('/users/:userId/posts', function (req, res) {
+  Posts.create(req.body).then(function (result) {
+    res.send(result)
+  }).catch(function (err) {
+    console.log(err)
+  })
+})
+
+app.put('/users/:userId/posts/:postId', function (req, res) {
+  var postId = req.params.postId;
+
+  Posts.findByIdAndUpdate(postId, req.body).then(function (result) {
+    res.send(result)
+  }).catch(function (err) {
+    console.log(err)
+  })
+})
+
+app.delete('/users/:userId/posts/:postId', function (req, res) {
+  var postId = req.params.postId;
+
+  Posts.findByIdAndRemove(postId).then(function (result) {
+    res.send(result)
+  }).catch(function (err) {
+    console.log(err)
+  })
+})
+
 // listener
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
@@ -75,5 +124,9 @@ app.listen(3000, function () {
  * DELETE /usuarios/:usuarioId => eliminar un usuario
  * /publicaciones
  * /comentarios
+ * 
+ * 
+ * posts
+ * 
  * 
  */
