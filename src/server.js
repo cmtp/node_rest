@@ -16,32 +16,52 @@ app.use(morgan('dev'));
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
-// POST /usuarios
-app.post('/usuarios', function (req, res) {
+// POST registrar usuario
+app.post('/users', function (req, res) {
     var user = req.body;
-    // var resultado = Users.create(user);
-    Users.create(user).then(function(resultado) {
-        res.send(resultado);
+    // var result = Users.create(user);
+    Users.create(user).then(function(result) {
+        res.send(result);
     }).catch(function(err) {
         console.log(err);
     });
 });
-// GET 
-app.get('/usuarios', function(req, res) {
+// GET lista de usuarios
+app.get('/users', function(req, res) {
     // .find({name: 'chris'})
-    Users.find().then(function(resultado) {
-        res.send(resultado);
+    Users.find().then(function(result) {
+        res.send(result);
     }).catch(function(err) {
-        console.log(err)
+        console.log(err);
     });
-})
+});
+//GET mostrar un usuario por su id
+app.get('/users/:userId', function(req, res) {
+    var userId = req.params.userId;
+    Users.findById({id: userId}).then(function(result) {
+        res.send(result);
+    }).catch(function(err) {
+        console.log(err);
+    });
+});
 // PUT 
-app.put('/usuarios/:userId', function(req,res) {
-
+app.put('/users/:userId', function(req,res) {
+    var userId = req.params.body;
+    Users.updateId(userId, req.body).then(function (result) {
+        res.send(result);
+    }).catch(function(err) {
+        console.log(err);
+    });
 });
 // DELETE 
-app.put('/usuarios/:userId', function(req,res) {
+app.delete('/users/:userId', function(req,res) {
+    var userId = req.params.userId;
 
+    Users.deletedId(userId).then(function(result) {
+        res.send(result);
+    }).catch(function (err) {
+        console.log(err);
+    });
 });
 // listener
 app.listen(3000, function () {
