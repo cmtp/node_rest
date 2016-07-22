@@ -14,55 +14,11 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 //------- importing models
-var Users = require('./models/users.js')
+var Users = require('./models/user.js')
 var Posts = require('./models/posts.js')
 
-//------ controllers
-app.get('/users', function (req, res) {
-  Users.find().then(function (result) {
-    res.send(result)
-  }).catch(function (err) {
-    console.log(err)
-  })
-});
-
-app.get('/users/:userId', function (req, res) {
-  var userId = req.params.userId;
-  Users.findOne({_id: userId}).then(function (result) {
-    res.send(result)
-  }).catch(function (err) {
-    console.log(err)
-  })
-});
-
-app.post('/users', function (req, res) {
-  Users.create(req.body).then(function (result) {
-    res.send(result)
-  }).catch(function (err) {
-    console.log(err)
-  })
-})
-
-app.put('/users/:userId', function (req, res) {
-  var userId = req.params.userId;
-
-  Users.findByIdAndUpdate(userId, req.body, {new: true}).then(function (result) {
-    res.send(result)
-  }).catch(function (err) {
-    console.log(err)
-  })
-})
-
-app.delete('/users/:userId', function (req, res) {
-  var userId = req.params.userId;
-
-  Users.findByIdAndRemove(userId).then(function (result) {
-    res.send(result)
-  }).catch(function (err) {
-    console.log(err)
-  })
-})
-
+//
+app.use(require('./routes/users.js'))
 
 //--------------------------------------------------------------
 app.get('/users/:userId/posts', function (req, res) {
